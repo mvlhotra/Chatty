@@ -8,18 +8,7 @@ class App extends Component {
     this.state = {
       chatInput: '',
       currentUser: { name: 'Bob' },
-      messages: [
-        {
-          id: 'a12345',
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-        },
-        {
-          id: 'b45678',
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ]
+      messages: []
     }
 
   }
@@ -39,16 +28,25 @@ class App extends Component {
   handleMessage = (e, user) => {
 
     const newMsg = {
-      id: this.genStr(),
       username: user,
       content: e.target.value
     }
-    const oldMessages = this.state.messages;
-    this.setState({ messages: [...oldMessages, newMsg] })
+    this.socket.send(JSON.stringify(newMsg));
     this.state.chatInput = '';
   }
+  addMessage = newMsg => {
+    const oldMessages = this.state.messages;
+    this.setState({ messages: [...oldMessages, newMsg] })
+  };
   componentDidMount() {
     console.log("componentDidMount <App />");
+    this.socket = new WebSocket('ws://0.0.0.0:3001');
+    this.socket.addEventListener('open', event => {
+      console.log('connecting...');
+    });
+    this.socket.addEventListener('message', event => {
+      this.addMessage(JSON.parse(event.data));
+    });
     setTimeout(() => {
       console.log("Simulating incoming message");
       // Add a new message to the list of messages in the data store
