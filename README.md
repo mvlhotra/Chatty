@@ -14,7 +14,7 @@ With starter code provided by Lighthouse Labs, the final product was built as a 
 
 ### Feature Demo
 
-!["Chat Demo"](https://github.com/mvlhotra/Chatty/blob/master/build/Chatty_demo.gif)
+!["Chat Demo"](https://github.com/mvlhotra/Chatty/blob/master/build/Chatty_demo1.gif)
 
 
 ## Getting Started
