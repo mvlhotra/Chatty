@@ -4,8 +4,6 @@ Chatty is a simple real-time browser chat client, similar to Slack, Twitter or F
 
 With starter code provided by Lighthouse Labs, the final product was built as a way to primarily practice React and WebSockets skills, along with overall web development skills.
 
-## Final Product
-
 ## Current Features
 
 - Connect to server, join the chat
@@ -16,7 +14,7 @@ With starter code provided by Lighthouse Labs, the final product was built as a 
 
 ### Feature Demo
 
-!["Chat Demo"](https://github.com/mvlhotra/tweeter/blob/master/public/images/feed_scroll.gif)
+!["Chat Demo"](https://github.com/mvlhotra/Chatty/blob/master/build/Chatty_demo.gif)
 
 
 ## Getting Started
