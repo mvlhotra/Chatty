@@ -44,7 +44,7 @@ class App extends Component {
         username: user,
         content: e.target.value,
         color: this.state.userColor
-      }
+      };
     }
 
     if (newMessage !== undefined) {

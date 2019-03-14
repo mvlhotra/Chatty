@@ -1,7 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Message from './Message.jsx';
 
 class MessageList extends Component {
+  static get propTypes() {
+    return ({
+      messages: PropTypes.array
+    })
+  }
   // render all messages
   render() {
     const allMessages = this.props.messages.map(message => {

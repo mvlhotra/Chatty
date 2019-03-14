@@ -1,6 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class ChatBar extends Component {
+  static get propTypes() {
+    return ({
+      add: PropTypes.func,
+      user: PropTypes.string,
+      chatInput: PropTypes.string,
+      onChange: PropTypes.func
+    })
+  }
   //  when enter is pressed, handle username change vs new message accordingly.
   handleEnter(event) {
     if (event.target.className === 'chatbar-message') {
@@ -27,4 +35,5 @@ class ChatBar extends Component {
     );
   }
 }
+
 export default ChatBar;

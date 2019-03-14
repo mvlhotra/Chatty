@@ -1,6 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class Message extends Component {
+  static get propTypes() {
+    return ({
+      type: PropTypes.string,
+      content: PropTypes.string,
+      user: PropTypes.string,
+      color: PropTypes.string
+    })
+  }
 
   render() {
     {/* Different renderings are returned depending on the type of message. */ }
