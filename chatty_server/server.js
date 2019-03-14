@@ -19,14 +19,23 @@ const wss = new SocketServer({ server });
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
+
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  ws['color'] = 'red';
+  console.log(ws);
+  wss.clients.forEach(client => {
+    client.send(JSON.stringify({ type: 'usersOnline', content: wss.clients.size, id: uuid() }));
+  });
+
+
+
 
   ws.on('message', message => {
     const msgObj = JSON.parse(message);
     msgObj.id = uuid();
     msgObj.type === 'postMessage' ? msgObj.type = 'incomingMessage' : msgObj.type = 'incomingNotification';
-    wss.clients.forEach(function each(client) {
+    wss.clients.forEach(client => {
       if (client.readyState === client.OPEN) {
         client.send(JSON.stringify(msgObj));
       }

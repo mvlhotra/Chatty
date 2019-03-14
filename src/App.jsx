@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
+import Nav from './Nav.jsx';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
+import { createCipheriv, createPrivateKey } from 'crypto';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       chatInput: '',
-      userInput: 'Bob',
-      currentUser: 'Bob',
-      messages: []
+      userInput: 'Anonymous',
+      currentUser: 'Anonymous',
+      messages: [],
+      online: ''
     }
 
+  }
+  handleUsersOnline = (e) => {
+    this.setState({ online: e.content })
   }
   handleChange = (e) => {
     if (e.target.className === 'chatbar-message') {
@@ -54,13 +60,21 @@ class App extends Component {
   componentDidMount() {
     console.log("componentDidMount <App />");
     this.socket = new WebSocket('ws://0.0.0.0:3001');
-    this.socket.addEventListener('open', () => {
+    this.socket.addEventListener('open', event => {
       console.log('connecting...');
+
     });
+
     this.socket.addEventListener('message', event => {
       const msgData = JSON.parse(event.data);
-      this.addMessage(msgData);
+      if (msgData.type === 'usersOnline') {
+        this.handleUsersOnline(msgData);
+      } else {
+        this.addMessage(msgData);
+      }
+
     });
+
     // setTimeout(() => {
     //   console.log("Simulating incoming message");
     //   // Add a new message to the list of messages in the data store
@@ -73,9 +87,12 @@ class App extends Component {
   }
   render() {
     return (
-      <div className='container'>
-        <MessageList messages={this.state.messages} />
-        <ChatBar notif={this.handleNotification} user={this.state.userInput} add={this.handleMessage} chatInput={this.state.chatInput} onChange={this.handleChange} />
+      <div>
+        <Nav count={this.state.online} />
+        <div className='container'>
+          <MessageList messages={this.state.messages} />
+          <ChatBar notif={this.handleNotification} user={this.state.userInput} add={this.handleMessage} chatInput={this.state.chatInput} onChange={this.handleChange} />
+        </div>
       </div>
     );
   }
