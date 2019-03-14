@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 class ChatBar extends Component {
+  //  when enter is pressed, handle username change vs new message accordingly.
   handleEnter(event) {
     if (event.target.className === 'chatbar-message') {
       this.props.add(event, this.props.user);
@@ -9,6 +10,7 @@ class ChatBar extends Component {
     }
   }
   componentDidMount() {
+    // If the enter key is pressed, call handleEnter above.
     document.addEventListener('keydown', () => {
       if (event.keyCode === 13) {
         this.handleEnter(event)
