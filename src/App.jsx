@@ -12,12 +12,13 @@ class App extends Component {
       userInput: 'Anonymous',
       currentUser: 'Anonymous',
       messages: [],
-      online: ''
+      online: '',
+      userColor: '#000'
     }
 
   }
   handleUsersOnline = (e) => {
-    this.setState({ online: e.content })
+    this.setState({ online: e.content, userColor: e.nameColor })
   }
   handleChange = (e) => {
     if (e.target.className === 'chatbar-message') {
@@ -26,7 +27,6 @@ class App extends Component {
       this.setState({ userInput: e.target.value })
     }
   }
-
   handleMessage = (e, user) => {
     let newMessage;
     if (e.target.className === 'chatbar-username') {
@@ -42,7 +42,8 @@ class App extends Component {
       newMessage = {
         type: 'postMessage',
         username: user,
-        content: e.target.value
+        content: e.target.value,
+        color: this.state.userColor
       }
     }
 
@@ -60,7 +61,7 @@ class App extends Component {
   componentDidMount() {
     console.log("componentDidMount <App />");
     this.socket = new WebSocket('ws://0.0.0.0:3001');
-    this.socket.addEventListener('open', event => {
+    this.socket.addEventListener('open', () => {
       console.log('connecting...');
 
     });

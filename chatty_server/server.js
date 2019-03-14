@@ -3,6 +3,7 @@
 const express = require('express');
 const SocketServer = require('ws').Server;
 const uuid = require('uuid/v1');
+const color = require('randomcolor');
 
 // Set the port to 3001
 const PORT = 3001;
@@ -22,10 +23,9 @@ const wss = new SocketServer({ server });
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
-  ws['color'] = 'red';
-  console.log(ws);
+  ws.color = color();
   wss.clients.forEach(client => {
-    client.send(JSON.stringify({ type: 'usersOnline', content: wss.clients.size, id: uuid() }));
+    client.send(JSON.stringify({ nameColor: client.color, type: 'usersOnline', content: wss.clients.size, id: uuid() }));
   });
 
 
@@ -43,5 +43,11 @@ wss.on('connection', (ws) => {
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    console.log('Client disconnected')
+    wss.clients.forEach(client => {
+      client.send(JSON.stringify({ nameColor: client.color, type: 'usersOnline', content: wss.clients.size, id: uuid() }));
+    });
+
+  });
 });
