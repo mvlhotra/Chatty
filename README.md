@@ -51,19 +51,13 @@ With starter code provided by Lighthouse Labs, the final product was built as a 
 
 ## Todos
 
-- Notify users when someone has entered the chat
+- Notify users when someone has entered/left the chat
 - Emoji picker
 - Deploy app online
 - UI mods
 - Shortcuts
+- Channels?!
 
-## Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
 
 
 
